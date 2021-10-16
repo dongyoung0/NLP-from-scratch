@@ -4,7 +4,7 @@ Implement NLP from scratch
 
 |챕터|내용|날짜|비고|
 |-|---|------|---|
-|1|복습|||
+|1|복습|20-10-16|GPU 부분 추가 필요|
 |2|단어의 분산 표현|21-10-16|corpus.py : preprocess, c-matrix 생성, PPMI 계산 및 SVD|
 |3|word2vec|||
 |4|word2vec 개선|||
