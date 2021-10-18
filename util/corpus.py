@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import numpy as np
 
 def preprocess(text):
@@ -89,7 +90,7 @@ def most_similar(query, word_to_id, id_to_word, word_matrix, top=5):
         cnt += 1
         if cnt >= top:
             return
-        
+
 def ppmi(C, verbose=False, eps=1e-8):
     '''
     Positive Pointwise Mutual Information
