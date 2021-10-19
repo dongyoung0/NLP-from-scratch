@@ -1,6 +1,7 @@
 # NLP from scratch
 
 Implement NLP from scratch
+- 책 중심으로 직접 구현하면서 복습
 
 |챕터|내용|날짜|비고|
 |-|---|------|---|
@@ -12,3 +13,4 @@ Implement NLP from scratch
 |6|RNN 개선|||
 |7|RNN을 사용한 문장 생성|||
 |8|Attention|||
+
