@@ -15,7 +15,7 @@
 
 # basic linear neural net
 import numpy as np
-from common.funcs import cross_entropy_error, softmax
+from common.funcs import cross_entropy_error, softmax, sigmoid
 
 
 class MatMul:
@@ -107,6 +107,7 @@ class SoftmaxWithLoss:
         self.params, self.grads = [], []
         self.y = None  # softmax의 출력
         self.t = None  # 정답 레이블
+        self.loss = None
 
     def forward(self, x, t):
         self.t = t
@@ -116,15 +117,36 @@ class SoftmaxWithLoss:
         if self.t.size == self.y.size:
             self.t = self.t.argmax(axis=1)
 
-        loss = cross_entropy_error(self.y, self.t)
-        return loss
+        self.loss = cross_entropy_error(self.y, self.t)
+        return self.loss
 
     def backward(self, dout=1):
         batch_size = self.t.shape[0]
 
         dx = self.y.copy()
         dx[np.arange(batch_size), self.t] -= 1
-        dx *= dout
-        dx = dx / batch_size
+        dx = dx * dout / batch_size
 
         return dx
+
+
+class SigmoidWithLoss:
+    def __init__(self):
+        self.params, self.grads = [], []
+        self.y = None  # softmax의 출력
+        self.t = None  # 정답 레이블
+        self.loss = None
+
+    def forward(self, x, t):
+        self.t = t
+        self.y = sigmoid(x)
+
+        self.loss = cross_entropy_error(np.c_[1-self.y, self.y], self.t)
+        return self.loss
+
+    def backward(self, dout=1):
+        batch_size = self.t.shape[0]
+        dx = (self.y - self.t) * dout
+        dx = dx / batch_size
+        return dx
+    
