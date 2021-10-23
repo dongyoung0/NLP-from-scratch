@@ -4,23 +4,23 @@ from common.np import *  # import numpy as np
 from embedding import Embedding
 from negative_sampling import NegativeSamplingLoss
 
-class CBOW:
+class SkipGram:
     def __init__(self, vocab_size, hidden_size, window_size, corpus):
         V, H = vocab_size, hidden_size
-        
+
         # initialize weight
         W_in = 0.01 * np.random.randn(V, H).astype('f')
         W_out = 0.01 * np.random.randn(V, H).astype('f')
         
         # layer 생성
-        self.in_layers = []
+        self.in_layer = Embedding(W_in)
+        self.loss_layers = []
         for i in range(2 * window_size):
-            layer = Embedding(W_in)
-            self.in_layers.append(layer)
-        self.neg_loss = NegativeSamplingLoss(W_out, corpus, power=0.75, sample_size=5)
+            layer = NegativeSamplingLoss(W_out, corpus, power=0.75, sample_size=5)
+            self.loss_layers.append(layer)
         
         # layer, parameter 정리
-        layers = self.in_layers + [self.neg_loss]
+        layers = [self.in_layer] + self.loss_layers
         self.params, self.grads = [], []
         for layer in layers:
             self.params += layer.params
@@ -30,19 +30,16 @@ class CBOW:
         self.word_vecs = W_in
           
     def forward(self, contexts, target):
-        h = 0
-        for i, layer in enumerate(self.in_layers):
-            h += layer.forward(contexts[:, i])
-#         h /= len(self.in_layers)
-        h *= 1 / len(self.in_layers)
-        loss = self.neg_loss.forward(h, target)
+        h = self.in_layer.forward(target)
+        for i, layer in enumerate(self.loss_layers):
+            loss = layer.forward(h, contexts[:, i])
         return loss
     
     def backward(self, dout=1):
-        dout = self.neg_loss.backward(dout)
-#         dout /= len(self.in_layers)
-        dout *= 1 / len(self.in_layers)
-        for layer in self.in_layers:
-            layer.backward(dout)
+        dh = 0
+        for i, layer in enumerate(self.loss_layers):
+            dh += layer.backward(dout)
+        self.in_layer.backward(dh)
+        return None
             
         return None
