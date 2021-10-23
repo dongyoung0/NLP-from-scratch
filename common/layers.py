@@ -159,7 +159,10 @@ class Embedding:
     def forward(self, idx):
         W, = self.params
         self.idx = idx
-        out = W[np.asnumpy(idx)]
+        if GPU:
+          out = W[np.asnumpy(idx)]
+        else:
+          out = W[idx]
         return out
 
     def backward(self, dout):
