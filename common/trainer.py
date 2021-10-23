@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 import sys
 sys.path.append('..')
-import numpy as np
+from common.np import *  # import numpy as np
 import time
 import matplotlib.pyplot as plt
+from common.util import clip_grads
 
 class Trainer:
     def __init__(self, model, optimizer):
@@ -13,7 +14,7 @@ class Trainer:
         self.eval_interval = None
         self.current_epoch = 0
 
-    def fit(self, x, t, max_epoch=10, batch_size=32, max_grad=None, eval_interval=20, epoch_print=1):
+    def fit(self, x, t, max_epoch=10, batch_size=32, max_grad=None, eval_interval=20):
         data_size = len(x)
         max_iters = data_size // batch_size
         self.eval_interval = eval_interval
@@ -46,8 +47,7 @@ class Trainer:
                 if (eval_interval is not None) and (iters % eval_interval) == 0:
                     avg_loss = total_loss / loss_count
                     elapsed_time = time.time() - start_time
-                    if epoch % epoch_print == 0:
-                        print(f'| epoch {epoch+1} |  itr {iters+1}/{max_iters} | time {elapsed_time}[s] | loss {avg_loss}')
+                    print(f'| epoch {self.current_epoch+1} |  itr {iters+1}/{max_iters} | time {elapsed_time}[s] | loss {avg_loss}')
                     self.loss_list.append(float(avg_loss))
                     total_loss, loss_count = 0, 0
 

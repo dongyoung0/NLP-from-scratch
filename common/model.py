@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # +
-import numpy as np
+from common.np import *  # import numpy as np
 from common.layers import Sigmoid, Affine, SoftmaxWithLoss
 
 class TwoLayerNet:
