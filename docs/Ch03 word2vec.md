@@ -9,20 +9,20 @@
 
 - Neural Network처럼 학습 데이터를 미니배치로 나눠서 순차적으로 학습.
 
-![fig 3-1.png](Ch%2003%20word2vec%20f42969ee61314ded846ab1434b454bff/fig_3-1.png)
+![fig 3-1.png](../figs/fig%203-1.png)
 
 ## CBOW(Continuous Bag-Of-Words)
 
 - 주변 단어의 맥락(context)이 주어졌을때 무슨 단어(target)가 들어갈지 추측하는 과정.
 
-![fig 3-2.png](Ch%2003%20word2vec%20f42969ee61314ded846ab1434b454bff/fig_3-2.png)
+![fig 3-2.png](../figs/fig%203-2.png)
 
 - 학습시 사용한 말뭉치(corpus)에 따라 얻게 되는 단어의 분산 표현이 다름.
 - 가중치를 다시 학습할 수 있어서, 단어의 분산표현 갱신이나 새로운 단어 추가를 효육적으로 수행할 수 있음
 
 ### 학습 과정
 
-![fig 3-12.png](Ch%2003%20word2vec%20f42969ee61314ded846ab1434b454bff/fig_3-12.png)
+![fig 3-12.png](../figs/fig%203-12.png)
 
 1. context, target을 one-hot vector로 변환
 2. 해당 vector들을 input 으로 넣음 (이 때 input layer의 개수는 입력시키는 단어의 개수와 같음)
@@ -34,7 +34,7 @@
 
 - CBOW 모델에는 가중치가 2개 존재 : W_in, W_out
 
-![fig 3-15.png](Ch%2003%20word2vec%20f42969ee61314ded846ab1434b454bff/fig_3-15.png)
+![fig 3-15.png](../figs/fig%203-15.png)
 
 - W_in의 각 행(row)이 각 단어의 분산표현을 나타냄
 - W_out에도 각 단어의 의미가 열(column)으로 저장됨
@@ -45,7 +45,7 @@
 
 - CBOW와 다르게 target으로부터 주변 context를 추측하는 모델
 
-![fig 3-23.png](Ch%2003%20word2vec%20f42969ee61314ded846ab1434b454bff/fig_3-23.png)
+![fig 3-23.png](../figs/fig%203-23.png)
 
 - CBOW보다 계산 비용이 크지만 corpus가 커질수록 성능이 뛰어난 경향을 보임.
 
