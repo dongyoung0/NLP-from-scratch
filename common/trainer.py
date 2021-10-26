@@ -5,6 +5,7 @@ from common.np import *  # import numpy as np
 import time
 import matplotlib.pyplot as plt
 from common.util import clip_grads
+import pickle
 
 class Trainer:
     def __init__(self, model, optimizer):
@@ -14,7 +15,7 @@ class Trainer:
         self.eval_interval = None
         self.current_epoch = 0
 
-    def fit(self, x, t, max_epoch=10, batch_size=32, max_grad=None, eval_interval=20):
+    def fit(self, x, t, max_epoch=10, batch_size=32, max_grad=None, eval_interval=20, save_epoch=False):
         data_size = len(x)
         max_iters = data_size // batch_size
         self.eval_interval = eval_interval
@@ -50,6 +51,11 @@ class Trainer:
                     print(f'| epoch {self.current_epoch+1} |  itr {iters+1}/{max_iters} | time {elapsed_time}[s] | loss {avg_loss}')
                     self.loss_list.append(float(avg_loss))
                     total_loss, loss_count = 0, 0
+
+            #각 epoch 끝날때 마다 저장
+            if save_epoch == True:
+              file_name = self.model.__class__.__name__ + str(self.current_epoch) + '.pkl'
+              model.save_params(file_name)
 
             self.current_epoch += 1
 
