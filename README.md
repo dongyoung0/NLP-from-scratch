@@ -12,5 +12,5 @@ Implement NLP from scratch
 |5|RNN|21-10-23|RNNLM, time layers|
 |6|RNN 개선|21-10-24|LSTM, modified RNNLM using LSTM, dropout(구현 필요)|
 |7|RNN을 사용한 문장 생성|||
-|8|Attention|||
+|8|Attention|21-10-28|seq2seq|
 
