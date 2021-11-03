@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import sys
 sys.path.append(',,')
 from common.np import *  # import numpy as np
@@ -13,7 +14,7 @@ import collections
 #         self.corpus = corpus
 #         self.power = power
 #         self.sample_size = sample_size
-        
+
 #     def get_negative_sample(self, target):
 #         corpus = self.corpus
 #         #neg_sample = []
@@ -29,7 +30,7 @@ import collections
 #             new_p /= np.sum(new_p)
 #             #neg = np.random.choice(words, self.sample_size, p = new_p, replace=False)
 #             neg_sample[i, :] = np.random.choice(words, self.sample_size, p = new_p, replace=False)
-            
+
 #         return neg_sample
 
 

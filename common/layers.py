@@ -55,26 +55,19 @@ class Sigmoid:
 
 
 # +
-class Affine1:
-    def __init__(self, W, b):
-        self.layer = MatMul(W)
-        self.params = W, b
-        self.grads = [np.zeros_like(W), np.zeros_like(b)]
-        self.x = None
-        
+class Softmax:
+    def __init__(self):
+        self.params, self.grads = [], []
+        self.out = None
+
     def forward(self, x):
-        _, b = self.params
-        out = self.layer.forward(x)
-        self.x = x
-        return out
-    
+        self.out = softmax(x)
+        return self.out
+
     def backward(self, dout):
-        dx = self.layer.backward(dout)
-        dW = self.layer.grads
-        db = np.sum(dout, axis=0)
-        
-        self.grads[0][...] = dW
-        self.grads[1][...] = db
+        dx = self.out * dout
+        sumdx = np.sum(dx, axis=1, keepdims=True)
+        dx -= self.out * sumdx
         return dx
     
 
@@ -149,7 +142,7 @@ class SigmoidWithLoss:
         batch_size = self.t.shape[0]
         dx = (self.y - self.t) * dout / batch_size
         return dx
-    
+
 class Embedding:
     def __init__(self, W):
         self.params = [W]
